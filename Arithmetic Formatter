@@ -1,0 +1,52 @@
+def arithmetic_arranger(problems, show_answers=False):
+
+    if len(problems) < 6:
+
+        first_row = []
+        second_row = []
+        dashed_row = []
+        answer_row = []
+
+        for prob in problems:
+            seperated = prob.split()
+            first_num = seperated[0]
+            operator = seperated[1]
+            second_num = seperated[2]
+
+            if operator != '+' and operator != '-':
+                return "Error: Operator must be '+' or '-'."
+
+            if not first_num.isdigit() or not second_num.isdigit():
+                return "Error: Numbers must only contain digits."
+
+            if len(first_num) > 4 or len(second_num) > 4:
+                return "Error: Numbers cannot be more than four digits."
+            if len(first_num) > len(second_num):
+                dashed_length = len(first_num) + 2
+            else:
+                dashed_length = len(second_num) + 2
+
+            first_width = dashed_length - len(first_num)
+            second_width = dashed_length - len(second_num) - 1
+            
+            first_row.append((' ' * first_width) + first_num)
+            second_row.append(operator + (' ' * second_width) + second_num)
+            dashed_row.append(('-' * dashed_length))
+
+            if operator == '+':
+                answer = int(first_num) + int(second_num)
+            if operator == '-':
+                answer = int(first_num) - int(second_num)
+
+            answer_width = dashed_length - len(str(answer))
+            answer_row.append((' ' * answer_width) + str(answer))
+
+        if show_answers:
+            return "    ".join(first_row) + "\n" + "    ".join(second_row) + "\n" + "    ".join(dashed_row) + "\n" + "    ".join(answer_row) 
+    
+    else: 
+        return 'Error: Too many problems.'
+
+    return "    ".join(first_row) + "\n" + "    ".join(second_row) + "\n" + "    ".join(dashed_row) 
+
+print(f'\n{arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])}')
